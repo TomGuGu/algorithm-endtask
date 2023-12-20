@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -32,7 +33,7 @@ public class LineChartEx extends JFrame {
     pack();
     setTitle(title);
     setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
   private XYDataset createDataset(Map<? extends Number, Double> map) {
@@ -48,16 +49,8 @@ public class LineChartEx extends JFrame {
   }
 
   private JFreeChart createChart(XYDataset dataset, String title) {
-    JFreeChart chart = ChartFactory.createXYLineChart(
-        "Param vs. Has Loop",
-        "param",
-        "has loop",
-        dataset,
-        PlotOrientation.VERTICAL,
-        true,
-        true,
-        false
-    );
+    JFreeChart chart = ChartFactory.createXYLineChart("Param vs. Has Loop", "param", "has loop",
+        dataset, PlotOrientation.VERTICAL, true, true, false);
 
     XYPlot plot = chart.getXYPlot();
 
@@ -76,10 +69,7 @@ public class LineChartEx extends JFrame {
 
     chart.getLegend().setFrame(BlockBorder.NONE);
 
-    chart.setTitle(new TextTitle(title,
-            new Font("Serif", java.awt.Font.BOLD, 18)
-        )
-    );
+    chart.setTitle(new TextTitle(title, new Font("Serif", java.awt.Font.BOLD, 18)));
 
     return chart;
   }

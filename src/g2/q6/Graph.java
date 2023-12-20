@@ -55,7 +55,6 @@ public class Graph {
         }
       } else if (visited[v.getId()] == 1 && v.getId() != parent) {
         path.add(v);
-        System.out.println(path);
         return true;
       }
     }

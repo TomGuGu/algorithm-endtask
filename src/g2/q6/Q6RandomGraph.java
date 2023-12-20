@@ -39,6 +39,7 @@ public class Q6RandomGraph {
       map2.put(i, p / 50);
     }
 
+    // 利用 Swing 和 jfreechart 显示折线图
     SwingUtilities.invokeLater(() -> {
       LineChartEx ex1 = new LineChartEx(map1, "Vertices vs. Has Loop (p=0.5)");
       ex1.setVisible(true);

@@ -24,15 +24,11 @@ public class Province {
     }
   }
 
-  // 添加邻居省份，会为该省份和邻居省份添加同一条边
-  public void addNeighbourEachOther(Province province) {
-    addNeighbour(province);
-    province.addNeighbour(this);
-  }
-
-  public void addNeighboursEachOther(Province... provinces) {
+  // 将本省份和参数省份互相添加为相邻
+  public void addNeighboursBoth(Province... provinces) {
     for (Province province : provinces) {
-      addNeighbourEachOther(province);
+      addNeighbour(province);
+      province.addNeighbour(this);
     }
   }
 
@@ -45,7 +41,7 @@ public class Province {
       bestPaths.put(target, new ArrayList<>());
     }
 
-    bestPaths = doFindBestPathsTo(path, bestPaths);
+    dfsFind(path, bestPaths);
 
     for (int i = 0; i < targets.size(); i++) {
       System.out.println(i + 1 + ": 目标省份：" + targets.get(i));
@@ -62,7 +58,7 @@ public class Province {
     }
   }
 
-  public Map<Province, List<Province>> doFindBestPathsTo(List<Province> path,
+  private void dfsFind(List<Province> path,
       Map<Province, List<Province>> bestPaths) {
     if (bestPaths.containsKey(this)) {
       // 如果最短路径为空，或当前路径比最短路径还短，就更新最短路径
@@ -79,12 +75,10 @@ public class Province {
         continue;
       }
       path.add(neighbour);
-      neighbour.doFindBestPathsTo(path, bestPaths);
+      neighbour.dfsFind(path, bestPaths);
       path.remove(neighbour);
     }
-    return bestPaths;
   }
-
 
   @Override
   public String toString() {

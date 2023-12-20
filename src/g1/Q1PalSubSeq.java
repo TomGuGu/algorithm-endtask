@@ -8,7 +8,7 @@ public class Q1PalSubSeq {
     System.out.println(getMaxLength(str, 0, str.length() - 1));
   }
 
-  private static int getMaxLength(String str, int i, int j) {
+  public static int getMaxLength(String str, int i, int j) {
     if (i == j) {
       return 1;
     }
