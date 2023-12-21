@@ -1,13 +1,18 @@
 package g1;
 
 public class Q4EditDistance {
-    private static StringBuilder steps = new StringBuilder(); // 用于保存编辑步骤
+    private static StringBuilder stepsRecord = new StringBuilder(); // 用于保存编辑步骤
 
     public static void main(String[] args) {
         String word1 = "intention";
         String word2 = "execution";
         System.out.println("输入：word1 = \"" + word1 + "\", word2 = \"" + word2 + "\"");
         System.out.println("输出: " + getMinDistance(word1, word2));
+        System.out.println("说明：");
+        String[] steps = stepsRecord.toString().split(";");
+        for (int i = steps.length - 1; i >= 0; i--) {
+            System.out.println(steps[i]);
+        }
     }
 
     public static int getMinDistance(String word1, String word2) {
@@ -58,22 +63,20 @@ public class Q4EditDistance {
         int j = m;
         while (i > 0 || j > 0) {
             if (prev[i][j] == 1) {
-                steps.append("删除 ").append(word1.charAt(i - 1));
+                stepsRecord.append("删除").append(word1.charAt(i - 1)).append(";");
                 i--;
             } else if (prev[i][j] == 2) {
-                steps.append("添加 ").append(word2.charAt(j - 1));
+                stepsRecord.append("添加").append(word2.charAt(j - 1)).append(";");
                 j--;
             } else {
                 if (word1.charAt(i - 1) != word2.charAt(j - 1)) {
-                    steps.append("将").append(word1.charAt(i - 1)).append("替换为").append(word2.charAt(j - 1));
+                    stepsRecord.append("将").append(word1.charAt(i - 1)).append("替换为").append(word2.charAt(j - 1)).append(";");
                 }
                 i--;
                 j--;
             }
-
         }
 
-        System.out.println(steps);
         return D[n][m];
     }
 
