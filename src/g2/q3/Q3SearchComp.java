@@ -9,7 +9,7 @@ public class Q3SearchComp {
         int right = arr.length - 1;
 
         while (left <= right) {
-            int mid = left + (right - left) / 2;
+            int mid = (left + right) / 2;
 
             if (arr[mid] == target) {
                 return mid;
@@ -66,8 +66,14 @@ public class Q3SearchComp {
 
         System.out.println("请输入目标元素：");
         int target = input.nextInt();
+
+        long time = System.nanoTime();
         int binaryResult = binarySearch(arr, target);
+        System.out.println("二分查找花费时间 (ns)：" + (System.nanoTime() - time));
+
+        time = System.nanoTime();
         int ternaryResult = ternarySearch(arr, target);
+        System.out.println("三分查找花费时间 (ns)：" + (System.nanoTime() - time));
 
         System.out.println("二分查找结果: " + binaryResult);
         System.out.println("三分查找结果: " + ternaryResult);
