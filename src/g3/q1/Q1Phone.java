@@ -2,27 +2,25 @@ package g3.q1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Q1Phone {
 
   public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    String digits = scanner.nextLine();
-    System.out.println(letterCombinations(digits));
+    String digits = "23";
+    System.out.println(generateCombinations(digits));
   }
 
-  public static List<String> letterCombinations(String digits) {
+  public static List<String> generateCombinations(String digits) {
     String[] letters = new String[]{
         "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
     };
     StringBuilder tmp = new StringBuilder();
     List<String> result = new ArrayList<>();
-    dfs(digits, 0, letters, tmp, result);
+    combine(digits, 0, letters, tmp, result);
     return result;
   }
 
-  private static void dfs(String digits, int index, String[] letters, StringBuilder tmp,
+  private static void combine(String digits, int index, String[] letters, StringBuilder tmp,
       List<String> result) {
     if (index == digits.length()) {
       result.add(tmp.toString());
@@ -32,7 +30,7 @@ public class Q1Phone {
     int digit = digits.charAt(index) - '2';
     for (int i = 0; i < letters[digit].length(); i++) {
       tmp.append(letters[digit].charAt(i));
-      dfs(digits, index + 1, letters, tmp, result);
+      combine(digits, index + 1, letters, tmp, result);
       tmp.deleteCharAt(tmp.length() - 1);
     }
   }

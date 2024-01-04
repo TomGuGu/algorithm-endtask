@@ -45,7 +45,7 @@ public class BruteForce {
     private void calculateCost(int[] permutation) {
         int cost = 0;
         for (int i = 0; i < n; i++) {
-            cost += costs[i][permutation[i]];
+            cost += costs[permutation[i]][i];
         }
         if (cost < minCost) {
             minCost = cost;

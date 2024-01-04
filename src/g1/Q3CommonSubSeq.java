@@ -6,8 +6,7 @@ public class Q3CommonSubSeq {
   public static void main(String[] args) {
     String text1 = "abcde";
     String text2 = "ace";
-    System.out.println("输入：word1 = \"" + text1 + "\", word2 = \"" + text2 + "\"");
-    System.out.println("最长公共子序列的长度: " + getMaxLength(text1, text2));
+    System.out.println(getMaxLength(text1, text2));
   }
 
   public static int getMaxLength(String text1, String text2) {

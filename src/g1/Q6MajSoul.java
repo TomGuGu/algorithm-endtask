@@ -3,16 +3,16 @@ package g1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Q6MajSoul {
 
   public static void main(String[] args) {
+    int[] brandsYouHave = {1, 1, 1, 1, 2, 2, 3, 3, 5, 6, 7, 8, 9};
+
     // 输入你有的牌，保存到计数数组里
-    Scanner scanner = new Scanner(System.in);
     int[] brandsCount = new int[10];
-    for (int i = 1; i <= 13; i++) {
-      int brand = scanner.nextInt();
+    for (int i = 0; i < 13; i++) {
+      int brand = brandsYouHave[i];
       brandsCount[brand]++;
     }
 
@@ -26,6 +26,7 @@ public class Q6MajSoul {
       for (Integer brand : result) {
         System.out.print(brand + " ");
       }
+      System.out.println();
     }
   }
 

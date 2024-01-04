@@ -116,7 +116,7 @@ public class Q2HuBei {
     allProvincesExceptHuBei.add(fujian);
 
     // 找去往其他身份的最短路径
-    huBei.findBestPathsTo(allProvincesExceptHuBei);
+    huBei.test(allProvincesExceptHuBei);
   }
 
 }

@@ -8,22 +8,17 @@ public class Q5ArithSeq {
   }
 
   public static int getMaxLength(int[] nums) {
-    int result = 0;
-    for (int i = 0; i < nums.length; i++) {
-      for (int j = i + 1; j < nums.length; j++) {
-        int diff = nums[j] - nums[i];
-        int currentLength = 2;
-        int previous = nums[j];
-        for (int k = j + 1; k < nums.length; k++) {
-          if (nums[k] - previous == diff) {
-            currentLength++;
-            previous = nums[k];
-          }
-        }
-        result = Math.max(result, currentLength);
+    int n = nums.length;
+    int ans = 0;
+    int[][] dp = new int[n][1001];
+    for (int i = 1; i < n; ++i) {
+      for (int j = 0; j < i; ++j) {
+        int d = nums[i] - nums[j] + 500;
+        dp[i][d] = Math.max(dp[i][d], dp[j][d] + 1);
+        ans = Math.max(ans, dp[i][d]);
       }
     }
-    return result;
+    return ans + 1;
   }
 
 }

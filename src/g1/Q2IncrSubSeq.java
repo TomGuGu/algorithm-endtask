@@ -4,7 +4,7 @@ public class Q2IncrSubSeq {
 
   public static void main(String[] args) {
     int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
-    System.out.println("最长递增子序列的长度为：" + getMaxLength(nums));
+    System.out.println(getMaxLength(nums));
   }
 
   public static int getMaxLength(int[] nums) {

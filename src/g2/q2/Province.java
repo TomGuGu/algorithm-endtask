@@ -32,40 +32,34 @@ public class Province {
     }
   }
 
-  public void findBestPathsTo(List<Province> targets) {
+  public void test(List<Province> targets) {
+    printAllBestPath(findAllBestPath(targets));
+  }
+
+  private Map<Province, List<Province>> findAllBestPath(List<Province> targets) {
     List<Province> path = new ArrayList<>();
     path.add(this);
 
-    Map<Province, List<Province>> bestPaths = new HashMap<>();
+    Map<Province, List<Province>> allBestPath = new HashMap<>();
     for (Province target : targets) {
-      bestPaths.put(target, new ArrayList<>());
+      allBestPath.put(target, new ArrayList<>());
     }
 
-    dfsFind(path, bestPaths);
+    dfsFind(path, allBestPath);
 
-    for (int i = 0; i < targets.size(); i++) {
-      System.out.println(i + 1 + ": 目标省份：" + targets.get(i));
-      System.out.print("路径：");
-      for (int j = 0; j < bestPaths.get(targets.get(i)).size(); j++) {
-        System.out.print(bestPaths.get(targets.get(i)).get(j));
-        if (j != bestPaths.get(targets.get(i)).size() - 1) {
-          System.out.print(" -> ");
-        }
-      }
-      System.out.println();
-      System.out.println("途经省份：" + (bestPaths.get(targets.get(i)).size() - 2));
-      System.out.println();
-    }
+    return allBestPath;
   }
 
   private void dfsFind(List<Province> path,
-      Map<Province, List<Province>> bestPaths) {
-    if (bestPaths.containsKey(this)) {
+      Map<Province, List<Province>> allBestPath) {
+    // 如果这个省份是目标省份之一，就更新最短路径
+    if (allBestPath.containsKey(this)) {
       // 如果最短路径为空，或当前路径比最短路径还短，就更新最短路径
-      List<Province> bestPath = bestPaths.get(this);
+      // 注意需要复制一份 path
+      List<Province> bestPath = allBestPath.get(this);
       if (bestPath.isEmpty() || path.size() < bestPath.size()) {
-        bestPaths.get(this).clear();
-        bestPaths.get(this).addAll(path);
+        bestPath.clear();
+        bestPath.addAll(path);
       }
     }
 
@@ -75,9 +69,29 @@ public class Province {
         continue;
       }
       path.add(neighbour);
-      neighbour.dfsFind(path, bestPaths);
+      neighbour.dfsFind(path, allBestPath);
       path.remove(neighbour);
     }
+  }
+
+  private void printAllBestPath(Map<Province, List<Province>> bestPaths) {
+    for (Province target : bestPaths.keySet()) {
+      System.out.println("目标省份：" + target);
+      System.out.print("路径：");
+      for (int i = 0; i < bestPaths.get(target).size(); i++) {
+        System.out.print(bestPaths.get(target).get(i));
+        if (i != bestPaths.get(target).size() - 1) {
+          System.out.print(" -> ");
+        }
+      }
+      System.out.println();
+      System.out.println("途经省份：" + (bestPaths.get(target).size() - 2));
+      System.out.println();
+    }
+
+    System.out.println("途径省份数量是否都小于等于2：" + bestPaths.values()
+        .stream()
+        .allMatch(path -> path.size() - 2 <= 2));
   }
 
   @Override

@@ -5,56 +5,60 @@ import java.util.Collections;
 import java.util.List;
 
 class Graph {
-    int V;
-    List<Edge> edges;
 
-    public Graph(int V) {
-        this.V = V;
-        edges = new ArrayList<>();
+  int V;
+  List<Edge> edges;
+
+  public Graph(int V) {
+    this.V = V;
+    edges = new ArrayList<>();
+  }
+
+  public void addEdge(int src, int dest, double weight) {
+    edges.add(new Edge(src, dest, weight));
+  }
+
+  public List<Edge> kruskalMST() {
+    // 按照权重从小到大排序
+    Collections.sort(edges);
+
+    int[] parentOfVertices = new int[V];
+    for (int i = 0; i < V; i++) {
+      parentOfVertices[i] = i;
     }
 
-    public void addEdge(int src, int dest, double weight) {
-        edges.add(new Edge(src, dest, weight));
+    List<Edge> mst = new ArrayList<>();
+
+    int count = 0;
+    for (Edge edge : edges) {
+      if (count == V - 1) {
+        break;
+      }
+
+      int srcParent = find(parentOfVertices, edge.src);
+      int destParent = find(parentOfVertices, edge.dest);
+
+      if (srcParent != destParent) {
+        mst.add(edge);
+        union(parentOfVertices, srcParent, destParent);
+        count++;
+      }
     }
 
-    public List<Edge> kruskalMST() {
-        // Sort edges by weight in ascending order
-        Collections.sort(edges);
+    return mst;
+  }
 
-        int[] parent = new int[V];
-        for (int i = 0; i < V; i++) {
-            parent[i] = i;
-        }
-
-        List<Edge> mst = new ArrayList<>();
-
-        int edgeCount = 0;
-        int index = 0;
-        while (edgeCount < V - 1 && index < edges.size()) {
-            Edge edge = edges.get(index++);
-            int srcParent = find(parent, edge.src);
-            int destParent = find(parent, edge.dest);
-
-            if (srcParent != destParent) {
-                mst.add(edge);
-                union(parent, srcParent, destParent);
-                edgeCount++;
-            }
-        }
-
-        return mst;
+  private int find(int[] parentOfVertices, int vertex) {
+    if (parentOfVertices[vertex] != vertex) {
+      parentOfVertices[vertex] = find(parentOfVertices, parentOfVertices[vertex]);
     }
+    return parentOfVertices[vertex];
+  }
 
-    private int find(int[] parent, int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent, parent[vertex]);
-        }
-        return parent[vertex];
-    }
+  private void union(int[] parentOfVertices, int x, int y) {
+    int xParent = find(parentOfVertices, x);
+    int yParent = find(parentOfVertices, y);
+    parentOfVertices[xParent] = yParent;
+  }
 
-    private void union(int[] parent, int x, int y) {
-        int xParent = find(parent, x);
-        int yParent = find(parent, y);
-        parent[xParent] = yParent;
-    }
 }
